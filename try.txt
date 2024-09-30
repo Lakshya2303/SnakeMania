@@ -1,0 +1,240 @@
+let playBtn = document.querySelector(".play-game");
+function playGame(){
+    playBtn.addEventListener("click", function(){
+        playBtn.classList.add("d-n");
+        gameBoard.style.display = "grid";
+        gameBoard.style.gridTemplate = " repeat(14,1fr)/repeat(14,1fr)";
+        startGame();
+    })
+}
+playGame();
+
+let gameBoard = document.querySelector(".game");
+let foodX = Math.floor(Math.random()*14)+1;
+let foodY = Math.floor(Math.random()*14)+1;
+let snakeX = 1;
+let snakeY = 1;
+let snakeBody = [];
+let velocityX = 0;
+let velocityY = 0;
+let snakeElement;
+let foodElement;
+
+function startGame(){
+    
+    snakeElement = document.createElement("div")
+    snakeElement.classList.add("snake")
+    snakeElement.style.gridArea = `${snakeX}/${snakeY}`
+    gameBoard.appendChild(snakeElement);
+
+    foodElement = document.createElement("div")
+    foodElement.classList.add("food")
+    foodElement.style.gridArea = `${foodY}/${foodX}`
+    gameBoard.appendChild(foodElement)
+
+    document.addEventListener("keydown",handleKeyDown)
+
+    setInterval(updateGame,200)
+
+}
+
+function stopGame(){
+    document.removeEventListener("keydown",handleKeyDown);
+    velocityX = 0;
+    velocityY = 0;
+
+}
+
+function handleKeyDown(e) {
+    moveSnake(e.key);
+    console.log(e.key);
+}
+
+function moveSnake(move){
+    switch (move) {
+        case "ArrowUp":
+            if(velocityY!==1){
+                velocityX = 0;
+                velocityY = -1;
+            }
+        break;
+        case "ArrowDown":
+            if(velocityY!==-1){
+                velocityX = 0;
+                velocityY = 1;
+            }
+        break;
+        case "ArrowLeft":
+            if(velocityX!==1){
+                velocityX = -1;
+                velocityY = 0;
+            }
+        break;
+        case "ArrowRight":
+            if(velocityX!==-1){
+                velocityX = 1;
+                velocityY = 0;
+            }
+        break;
+    }
+}
+
+function updateGame() {
+    // Update snake position
+    snakeX += velocityX;
+    snakeY += velocityY;
+
+    // Check boundaries to prevent the snake from moving out of bounds
+    if(snakeX < 1 || snakeX > 14 || snakeY < 1 || snakeY > 14){
+        stopGame();
+    }
+    
+    // Update snake element's grid area
+    snakeElement.style.gridArea = `${snakeY}/${snakeX}`;
+
+    if (snakeX === foodX && snakeY === foodY) {
+        // Move the food to a new random position
+        foodX = Math.floor(Math.random() * 14) + 1;
+        foodY = Math.floor(Math.random() * 14) + 1;
+        snakeBody.push([foodX,foodY])
+    }
+    
+}
+
+
+
+
+
+
+
+
+let gameBoard = document.querySelector(".game");
+let playBtn = document.querySelector(".play-game");
+let foodX;
+let foodY;
+let foodElement;
+let snakeX = 1;
+let snakeY = 1;
+let snakeElement;
+let snakeBody = [];
+let snake;
+let velocityX = 0;
+let velocityY = 0;
+
+function playGame(){
+    playBtn.addEventListener("click", function(){
+        playBtn.classList.add("d-n");
+        gameBoard.style.display = "grid";
+        gameBoard.style.gridTemplate = "repeat(14,1fr)/repeat(14,1fr)"
+        startGame();
+    });
+}
+playGame();
+
+function createSnake(){
+    snakeElement = document.createElement("div");
+    snakeElement.classList.add("snake");
+    snakeElement.style.gridArea = `${snakeY}/${snakeX}`;
+    gameBoard.appendChild(snakeElement); 
+}
+function createFood(){
+    foodX = Math.floor(Math.random()*14)+1;
+    foodY = Math.floor(Math.random()*14)+1;
+    foodElement = document.createElement("div");
+    foodElement.classList.add("food");
+    foodElement.style.gridArea = `${foodY}/${foodX}`;
+    gameBoard.appendChild(foodElement);
+}
+
+function move(e){
+    switch(e.key){
+        case "ArrowUp":
+            if(velocityY!==1){
+                velocityX = 0;
+                velocityY = -1;
+            }
+        break;
+        case "ArrowDown":
+            if(velocityY!==-1){
+                velocityX = 0;
+                velocityY = 1;
+            }
+        break;
+        case "ArrowLeft":
+            if(velocityX!==1){
+                velocityX = -1;
+                velocityY = 0;
+            }
+        break;
+        case "ArrowRight":
+            if(velocityX!==-1){
+                velocityX = 1;
+                velocityY = 0;
+            }
+        break;
+    }
+}
+
+function updateGame() {
+    // Move the snake head first
+    snakeX += velocityX;
+    snakeY += velocityY;
+
+    // Check for collision with the borders (assuming a 14x14 grid)
+    if (snakeX < 1 || snakeX > 14 || snakeY < 1 || snakeY > 14) {
+        gameOver();  // If snake crosses the grid boundary, trigger game over
+        return; // Stop further execution
+    }
+
+    // Check for collision with the snake's own body
+    for (let i = 0; i < snakeBody.length; i++) {
+        if (snakeBody[i][0] === snakeX && snakeBody[i][1] === snakeY) {
+            gameOver();  // If head touches a body segment, trigger game over
+            return; // Stop further execution
+        }
+    }
+
+    // Clear the game board to avoid old body parts staying behind
+    gameBoard.innerHTML = '';
+
+    // Create food element
+    foodElement = document.createElement("div");
+    foodElement.classList.add("food");
+    foodElement.style.gridArea = `${foodY}/${foodX}`;
+    gameBoard.appendChild(foodElement);
+
+    // Create snake head element with 'snakehead' class
+    snakeElement = document.createElement("div");
+    snakeElement.classList.add("snakehead");  // This differentiates the head
+    snakeElement.style.gridArea = `${snakeY}/${snakeX}`;
+    gameBoard.appendChild(snakeElement);
+
+    // Move the body: Update body segments based on the previous positions
+    for (let i = 0; i < snakeBody.length; i++) {
+        const bodySegment = document.createElement("div");
+        bodySegment.classList.add("snakebody");  // This differentiates the body
+        bodySegment.style.gridArea = `${snakeBody[i][1]}/${snakeBody[i][0]}`;
+        gameBoard.appendChild(bodySegment);
+    }
+
+    // Add the current head position to the body array after movement
+    snakeBody.push([snakeX, snakeY]);
+
+    // Check if the snake eats the food
+    if (snakeX === foodX && snakeY === foodY) {
+        // Generate new food coordinates
+        foodX = Math.floor(Math.random() * 14) + 1;
+        foodY = Math.floor(Math.random() * 14) + 1;
+    } else {
+        // Remove the last body segment if no food is eaten
+        snakeBody.shift(); // This keeps the body size constant unless food is eaten
+    }
+}
+
+function startGame(){
+    createSnake();
+    createFood();
+    document.addEventListener("keydown",move);
+
+    setInterval(updateGame,200)
+}

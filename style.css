@@ -1,0 +1,118 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(32, 39, 45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.game{
+    position: absolute;
+    top: 10%;
+    width: 80vw;
+    max-width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    background-color: transparent;
+    box-shadow: 2px 2px 10px black, -2px -2px 10px black, -2px -2px 10px black, -2px -2px 10px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.play-game{
+    width: 30%;
+    height: 15%;
+    font-size: 110%;
+    border-radius: 10px;
+    background-color: transparent;
+    border: none;
+    box-shadow: 2px 2px 10px rgba(59,135,197,0.8), -2px -2px 10px rgba(187,71,205,0.8);
+    color: azure;
+}
+.play-game:hover{
+    box-shadow: inset 2px 2px 10px rgba(0,0,0,0.8), -2px -2px 10px rgba(0,0,0,0.8);
+    transform: scale(0.8);
+    cursor: pointer;
+}
+.play-again{
+    position: absolute;
+    top: 85%;
+    font-size: 150%;
+    height: 60px;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: transparent;
+    border: none;
+    box-shadow: 2px 2px 10px rgba(59,135,197,0.8), -2px -2px 10px rgba(187,71,205,0.8);
+    color: azure;
+}
+.play-again:hover{
+    box-shadow: inset 2px 2px 10px rgba(0,0,0,0.8), -2px -2px 10px rgba(0,0,0,0.8);
+    transform: scale(0.8);
+    cursor: pointer;
+}
+.d-n{
+    display: none;
+}
+.food{
+    background-color: rgb(220, 149, 68);
+    height: 100%;
+    width: 100%;
+}
+.snakehead{
+    background-color: aqua;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+.snakebody{
+    background-color: rgb(206, 55, 100);
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+}
+.keys{
+    width: 100%;
+    height: 100px;
+    display: none;
+    gap: 10px;
+    margin-top: 100%;
+}
+.up,.down,.left,.right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 90%;
+    border-radius: 10px;
+    background: transparent;
+    box-shadow: 2px 2px 10px black, -2px -2px 10px black, -2px -2px 10px black, -2px -2px 10px black;
+}
+.up:hover,.down:hover,.left:hover,.right:hover{
+    box-shadow: inset 2px 2px 10px rgba(0,0,0,0.8), -2px -2px 10px rgba(0,0,0,0.8);
+    transform: scale(0.8);
+    cursor: pointer;
+}
+
+
+
+@media (max-width: 900px){
+    .game{
+        height: 50%;
+    }
+    .keys{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
